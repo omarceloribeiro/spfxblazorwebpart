@@ -53,9 +53,12 @@ var baseAppUrl = "https://site.sharepoint.com/sites/site1/SiteAssets/blazorapp1/
 
 ### Executing program
 
+* inside App1 folder
+* npm install
 * Run the SPFX
 * Add the HelloWorld1 webpart to the page
 ```
+npm install
 gulp serve
 ```
 
