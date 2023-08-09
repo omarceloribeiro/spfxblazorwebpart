@@ -34,9 +34,9 @@ Add new Web part to solution spfxplay-01.
 
 ### Dependencies
 
-* SPFX
-* Blazor WebAssembly
-* SharePoint Site
+* [SharePoint Framework](https://aka.ms/spfx)
+* [Blazor WebAssembly](https://dotnet.microsoft.com/pt-br/apps/aspnet/web-apps/blazor)
+* [Microsoft 365 tenant](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
 
 ### Installing
 
