@@ -66,6 +66,20 @@ npm install
 gulp serve
 ```
 
+### Executing blazor app alone
+
+* inside BlazorApp1 folder
+
+Use Visual Studio to open BlazorApp1.sln
+
+Or use VS Code
+
+```
+code .
+dotnet watch run --project BlazorApp1
+```
+
+
 ## Help
 
 
