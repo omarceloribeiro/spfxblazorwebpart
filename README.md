@@ -36,6 +36,7 @@ Add new Web part to solution spfxplay-01.
 
 * SPFX
 * Blazor WebAssembly
+* SharePoint Site
 
 ### Installing
 
