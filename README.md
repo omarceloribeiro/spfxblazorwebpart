@@ -49,6 +49,10 @@ Upload the published blazorapp folder to a SharePoint Library
 ```
 copy the url of the blazorapp folder and set to the baseAppUrlon HelloWorldWebPart.ts  
 var baseAppUrl = "https://site.sharepoint.com/sites/site1/SiteAssets/blazorapp1/";
+
+set tenant url on initialPage in serve.json
+ex:
+"initialPage": "https://site.sharepoint.com/sites/site1/_layouts/workbench.aspx"
 ```
 
 ### Executing program
