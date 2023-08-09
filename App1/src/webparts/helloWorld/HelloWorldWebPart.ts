@@ -24,7 +24,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   public render(): void {
 
     debugger;
-    var baseAppUrl = "https://covertecnolgiaensino.sharepoint.com/sites/TesteMR2/SiteAssets/blazorapp1/";
+    var baseAppUrl = "https://site.sharepoint.com/sites/TesteMR2/SiteAssets/blazorapp1/";
 
     this.loadCSS(baseAppUrl + "css/bootstrap/bootstrap.min.css");
     this.loadCSS(baseAppUrl + "css/app.css");
