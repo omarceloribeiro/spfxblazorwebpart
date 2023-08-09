@@ -42,8 +42,9 @@ Add new Web part to solution spfxplay-01.
 * [SharePoint Framework](https://aka.ms/spfx)
 * [Blazor WebAssembly](https://dotnet.microsoft.com/pt-br/apps/aspnet/web-apps/blazor)
 * [Microsoft 365 tenant](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-* Node v16.20
-* NPM 8.19
+* [Node v16.20.1](https://nodejs.org/en/blog/release/v16.20.1) (not higer than v16)
+* [NPM 8.19.4](https://docs.npmjs.com/cli/v8?v=true) (not higher than v8)
+  
 ### Installing
 
 
