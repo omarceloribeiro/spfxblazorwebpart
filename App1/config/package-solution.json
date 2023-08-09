@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "app-1-client-side-solution",
+    "id": "f431737f-d74e-421a-a3fe-2174e48ca884",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.17.4"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "app-1 description"
+      },
+      "longDescription": {
+        "default": "app-1 description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "app-1 Feature",
+        "description": "The feature that activates elements of the app-1 solution.",
+        "id": "8baf643e-4e8c-4081-8a66-61090ca0dfa3",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/app-1.sppkg"
+  }
+}
