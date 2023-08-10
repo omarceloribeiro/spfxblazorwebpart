@@ -91,6 +91,14 @@ dotnet watch run --project BlazorApp1
 
 ## Help
 
+* error: Failed to find a valid digest in the 'integrity' attribute for resource
+  
+solution: open blazor solution, Delete obj and bin folder, publish solution again
+https://stackoverflow.com/questions/69926878/failed-to-find-a-valid-digest-in-the-integrity-attribute-for-resource-in-blazo
+
+* error: messages pointing to localhost
+
+solution: review the baseAppUrl
 
 ## Authors
 
