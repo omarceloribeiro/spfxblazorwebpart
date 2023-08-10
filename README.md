@@ -33,7 +33,11 @@ Add new Web part to solution spfxplay-01.
 ? Which template would you like to use? "Blazor WebAssembly"
 ```
 
+### Next steps
 
+* Access sharepoint list from blazor app using current credentials
+* create c# library to access list data
+* package the blazorapp within the webpart folder
 
 ## Getting Started
 
@@ -88,6 +92,11 @@ code .
 dotnet watch run --project BlazorApp1
 ```
 
+## Know Issues
+
+* page url has to finish with / in order to work the routes in blazor app
+* blazor app is not loaded when the page is in edit mode
+* blazor app has to be deployed to siteassets library
 
 ## Help
 
