@@ -1,4 +1,4 @@
-import { Version } from '@microsoft/sp-core-library';
+import { DisplayMode, Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField
@@ -21,41 +21,32 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
 
+  private baseAppUrl = "https://site.sharepoint.com/sites/TesteMR1/SiteAssets/blazorapp1/";
+  private blazorLoadCount = 0;
+  private blazorInitialized = false;
+  private blazorLoaded = false;
+
+
   public render(): void {
 
-    debugger;
-    var baseAppUrl = "https://site.sharepoint.com/sites/TesteMR2/SiteAssets/blazorapp1/";
+    console.log("render");
+    console.log("blazorLoaded = " + this.blazorLoaded);
+    console.log("blazorStarted = " + this.blazorInitialized); 
 
-    this.loadCSS(baseAppUrl + "css/bootstrap/bootstrap.min.css");
-    this.loadCSS(baseAppUrl + "css/app.css");
-    this.loadCSS(baseAppUrl + "BlazorApp1.styles.css");
+    if (this.blazorLoaded && this.blazorInitialized){
+      console.log("refresh blazor app div");
+      
 
-  this.loadJS(baseAppUrl + "_framework/blazor.webassembly.js", 'true', true);
-  this.loadJS(baseAppUrl + "myscript.js");
+      
+    }
  // navigator.serviceWorker.register('https://site.sharepoint.com/sites/TesteMR2/SiteAssets/TesteApp1/app1/service-worker.js');
 
- this.domElement.addEventListener("DOMContentLoaded", function() {
-  //Blazor.start();
-});
-
-setTimeout(function () { 
-  //alert("Starting Blazor");
-  console.log("Loading Blazor...");
-  debugger; 
-  //this.window.Blazor.start();
-  this.window.Blazor.start({
-        loadBootResource: function (type: any, name: any, defaultUri: any, integrity: any) {
-            console.log(`Loading: '${type}', '${name}', '${defaultUri}', '${integrity}'`);
-            return  baseAppUrl +`_framework/${name}`;
-            // switch (type) {
-            //     case 'dotnetjs':
-            //     case 'dotnetwasm':
-            //     case 'timezonedata':
-            //         return `https://site.sharepoint.com/sites/TesteMR2/SiteAssets/blazorapp1/_framework/${name}`;
-            // }
-        }
+    this.domElement.addEventListener("DOMContentLoaded", function() {
+      //Blazor.start();
+      console.log("DOM loades");
     });
-}, 2000);
+
+
 
     this.domElement.innerHTML = `
     <section class="${styles.helloWorld} ${!!this.context.sdks.microsoftTeams ? styles.teams : ''}">
@@ -87,54 +78,169 @@ setTimeout(function () {
     </section>`;
   }
 
-  protected loadJS(FILE_URL : string, async : string = 'true', addAutoStartFalse : boolean = false) {
-    let scriptEle = document.createElement("script");
-    
-    scriptEle.setAttribute("src", FILE_URL);
-    scriptEle.setAttribute("type", "text/javascript");
-    scriptEle.setAttribute("async", async);
+  protected onDisplayModeChanged(oldDisplayMode: DisplayMode): void {
+    console.log("onDisplayModeChanged");
+    // 1 display
+    // 2 edit
+    let displayModeText = "";
+    switch (oldDisplayMode){
+      case 1 : displayModeText = "display"; break;
+      case 2 : displayModeText = "edit"; break;
+      default: displayModeText = "" + oldDisplayMode;
+    }
+      
+    console.log("display mode changed. old display mode = " + displayModeText);
+  }
+  
+  
 
-    if (addAutoStartFalse)
-      scriptEle.setAttribute("autostart", "false");
-  
-    document.body.appendChild(scriptEle);
-  
-    // success event 
-    scriptEle.addEventListener("load", () => {
-      console.log("File loaded")
+  protected loadBlazor(): Promise<void>{
+
+    const myPromise = new Promise<void>((resolve, reject) => {
+    this.blazorLoadCount++;
+    console.log("blazor bundle load " + this.blazorLoadCount); 
+    //this.loadBlazorCSS();
+    //this.loadBlazorScripts();
+
+    // css
+    this.loadCSS(this.baseAppUrl + "css/bootstrap/bootstrap.min.css")
+      .then(() => this.loadCSS(this.baseAppUrl + "css/app.css"))
+        .then(()=>this.loadCSS(this.baseAppUrl + "BlazorApp1.styles.css"))
+          .then(() => this.loadJS(this.baseAppUrl + "_framework/blazor.webassembly.js", 'true', true))
+            .then(() => this.loadJS(this.baseAppUrl + "myscript.js"))
+              .then(() => {
+                console.log("blazor bundle loaded " + this.blazorLoadCount);
+                resolve();
+              });
     });
-     // error event
-    scriptEle.addEventListener("error", (ev) => {
-      console.log("Error on loading file", ev);
-    });
+
+    return myPromise;
   }
 
-  protected loadCSS(FILE_URL : string) {
-    let scriptEle = document.createElement("link");
+  protected loadBlazorCSS(){
+    this.loadCSS(this.baseAppUrl + "css/bootstrap/bootstrap.min.css");
+    this.loadCSS(this.baseAppUrl + "css/app.css");
+    this.loadCSS(this.baseAppUrl + "BlazorApp1.styles.css");
+  }
+
+  protected loadBlazorScripts(){
+    this.loadJS(this.baseAppUrl + "_framework/blazor.webassembly.js", 'true', true);
+    this.loadJS(this.baseAppUrl + "myscript.js");
+  }
+
+  protected loadJS(FILE_URL : string, async : string = 'true', addAutoStartFalse : boolean = false): Promise<void> {
+    const myPromise = new Promise<void>((resolve, reject) => {
+
+      let scriptEle = document.createElement("script");
+      
+      scriptEle.setAttribute("src", FILE_URL);
+      scriptEle.setAttribute("type", "text/javascript");
+      scriptEle.setAttribute("async", async);
+
+      if (addAutoStartFalse)
+        scriptEle.setAttribute("autostart", "false");
     
-    scriptEle.setAttribute("rel", 'stylesheet');
-    scriptEle.setAttribute("type", "text/css");
-    scriptEle.setAttribute("href", FILE_URL);
-  
-    document.head.appendChild(scriptEle);
-  
-    // success event 
-    scriptEle.addEventListener("load", () => {
-      console.log("File loaded")
+      document.body.appendChild(scriptEle);
+    
+      // success event 
+      scriptEle.addEventListener("load", () => {
+        console.log("JS File loaded");
+        resolve();
+      });
+      // error event
+      scriptEle.addEventListener("error", (ev) => {
+        console.log("Error on loading file", ev);
+        reject(ev);
+      });
     });
-     // error event
-    scriptEle.addEventListener("error", (ev) => {
-      console.log("Error on loading file", ev);
+
+    return myPromise;
+  }
+
+  protected loadCSS(FILE_URL : string): Promise<void> {
+    const myPromise = new Promise<void>((resolve, reject) => {
+      let scriptEle = document.createElement("link");
+      
+      scriptEle.setAttribute("rel", 'stylesheet');
+      scriptEle.setAttribute("type", "text/css");
+      scriptEle.setAttribute("href", FILE_URL);
+    
+      document.head.appendChild(scriptEle);
+    
+      // success event 
+      scriptEle.addEventListener("load", () => {
+        console.log("CSS File loaded");
+        resolve();
+      });
+      // error event
+      scriptEle.addEventListener("error", (ev) => {
+        console.log("Error on loading file", ev);
+        reject(ev);
+      });
     });
+
+    return myPromise;
   }
 
   protected onInit(): Promise<void> {
+
+    
+    console.log("onInit");
+    var baseHead = document.createElement('base');
+    baseHead.setAttribute("href", window.location.pathname + "/");
+    //document.head.appendChild(baseHead);
+    //window.location.hash("/CoolApp/");
+    history.pushState(null, "", window.location.href + '/');
+
+    this.loadBlazor()
+    .then(() =>{
+      this.blazorLoaded = true;
+      console.log("Loading Blazor...");
+      this.startBlazor(this);
+    });
+    
+
+    setTimeout(function () { 
+      //alert("Starting Blazor");
+      //console.log("Loading Blazor...");
+      //this.startBlazor(this);
+      //this.window.Blazor.start();
+      console.log("timeout executed");
+    }, 2000);
+
     return this._getEnvironmentMessage().then(message => {
       this._environmentMessage = message;
     });
+
+    
   }
 
+  protected startBlazor(context: any){
+    
+    let windowObj:any = window;
+    
+    windowObj.Blazor.start({
+      loadBootResource: function (type: any, name: any, defaultUri: any, integrity: any) {
+        
+        var newResourceUrl = context.baseAppUrl +`_framework/${name}`;
+        console.log(`Loading: '${type}', '${name}', '${newResourceUrl}', '${integrity}'`);
+          return  newResourceUrl;
+          // switch (type) {
+          //     case 'dotnetjs':
+          //     case 'dotnetwasm':
+          //     case 'timezonedata':
+          //         return `https://site.sharepoint.com/sites/TesteMR2/SiteAssets/blazorapp1/_framework/${name}`;
+          // }
+      }
+  });
+
+  console.log("blazor started");
+  this.blazorInitialized = true;
+
+}
+
   private _getEnvironmentMessage(): Promise<string> {
+    console.log("_getEnvironmentMessage");
     if (!!this.context.sdks.microsoftTeams) { // running in Teams, office.com or Outlook
       return this.context.sdks.microsoftTeams.teamsJs.app.getContext()
         .then(context => {
@@ -203,4 +309,9 @@ setTimeout(function () {
       ]
     };
   }
+
+  protected renderCompleted(error?: Error | undefined, didUpdate?: boolean | undefined): void {
+    console.log("on renderCompleted");
+  }
+  
 }
