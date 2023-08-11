@@ -79,6 +79,8 @@ npm install
 gulp serve
 ```
 
+* The page where the webpart is added (worbench or sometestpage.aspx) needs to end with / in order to blazor app routes work properly
+
 ### Executing blazor app alone
 
 * inside BlazorApp1 folder
