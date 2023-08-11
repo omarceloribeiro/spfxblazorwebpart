@@ -21,7 +21,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
 
-  private baseAppUrl = "https://3nc1np.sharepoint.com/sites/TesteMR1/SiteAssets/blazorapp1/";
+  private baseAppUrl = "https://site.sharepoint.com/sites/TesteMR1/SiteAssets/blazorapp1/";
   private blazorLoadCount = 0;
   private blazorInitialized = false;
   private blazorLoaded = false;
