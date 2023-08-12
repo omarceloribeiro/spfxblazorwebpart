@@ -10,6 +10,8 @@ The goal is be able to select the framework option "Blazor WebAssembly" during t
 
 ![blazor webpart](https://raw.githubusercontent.com/omarceloribeiro/spfxblazorwebpart/main/blazorwebpart.png)
 
+![blazor webpart2](https://raw.githubusercontent.com/omarceloribeiro/spfxblazorwebpart/main/webpart-addedonpage2.PNG)
+
 
 
 ex:
