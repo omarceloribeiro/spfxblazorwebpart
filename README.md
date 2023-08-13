@@ -4,6 +4,9 @@ Project initative to create a spfx webpart that uses blazor as framework.
 
 please see the Issues tab to see what is missing to get a working version of a blazor webpart.
 
+initiative submitted on SharePoint sp-dev-docs github:
+https://github.com/SharePoint/sp-dev-docs/issues/9137
+
 ## Description
 
 The goal is be able to select the framework option "Blazor WebAssembly" during the process of creating a spfx webapart.
@@ -122,6 +125,8 @@ Marcelo Ribeiro -
 
 ## Version History
 
+* 0.2
+    * Fixed navigaiton issues   
 * 0.1
     * Initial Project
 
