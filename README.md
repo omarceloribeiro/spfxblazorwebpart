@@ -7,6 +7,11 @@ please see the Issues tab to see what is missing to get a working version of a b
 initiative submitted on SharePoint sp-dev-docs github:
 https://github.com/SharePoint/sp-dev-docs/issues/9137
 
+Demo blazor webppart navigation video
+
+
+[Video](https://github.com/omarceloribeiro/spfxblazorwebpart/blob/main/DemoVideo.md)
+
 ## Description
 
 The goal is be able to select the framework option "Blazor WebAssembly" during the process of creating a spfx webapart.
