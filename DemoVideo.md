@@ -6,4 +6,8 @@ Project initative to create a spfx webpart that uses blazor as framework.
 
 The goal is be able to select the framework option "Blazor WebAssembly" during the process of creating a spfx webapart.
 
-https://raw.githubusercontent.com/omarceloribeiro/spfxblazorwebpart/main/blazorwebpartnavigation1.mp4
+
+
+
+https://github.com/omarceloribeiro/spfxblazorwebpart/assets/38572536/fa068f5f-c3ff-476d-8671-05fd6b99b5d1
+
