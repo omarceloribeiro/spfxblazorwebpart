@@ -59,7 +59,6 @@ Add new Web part to solution spfxplay-01.
 ## Motivation
 
 Would be great build spfx webpart using blazor as the framework. on webpart creation just select blazor and all the folder/project is generated. Would be a great improvement on spfx development for the community developers.
-will be much easier to develop spfx webparts using blazor instead of react. blazor is much simple, while react has many libraries and components, states, etc.
 would be a good option to build webparts like employee bithdays, company next events, current wheater, current pending approvals, company city holidays, etc!
 
 ## Next steps
