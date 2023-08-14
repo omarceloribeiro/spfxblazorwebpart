@@ -27,5 +27,8 @@ This project aims to be a template for new client side webpart projects, so any 
   ## Existing issues
   Just choose an issue to solve and implent the solution. please assign yourself to the issue to otherpeople know that someone is working on that.
 
+  ## New issues
+  To inform something is not working, just create a new issue describing what is hapenning.
+
   ## New Features
   For new features, please submit a new issue, or just add on comment somewhere, if the feature dont require to change the core files, or core template, and is generic enoguh for a generic start project, so it can be implemented.
