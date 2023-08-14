@@ -2,15 +2,27 @@
 
 Project initative to create a spfx webpart that uses blazor as framework.
 
-please see the Issues tab to see what is missing to get a working version of a blazor webpart.
+Please see the Issues tab and the Milestones to see what is missing to get a working version of a blazor webpart.
 
-initiative submitted on SharePoint sp-dev-docs github:
+Also please see the [Contributing guidelines](https://github.com/omarceloribeiro/spfxblazorwebpart/blob/main/CONTRIBUTING.md).
+
+Initiative also submitted on SharePoint sp-dev-docs github:
 https://github.com/SharePoint/sp-dev-docs/issues/9137
+still on triage.
 
 Demo blazor webppart navigation video
 
+[See Demo Video](https://github.com/omarceloribeiro/spfxblazorwebpart/blob/main/DemoVideo.md)
 
-[Video](https://github.com/omarceloribeiro/spfxblazorwebpart/blob/main/DemoVideo.md)
+At the moment, no changes was required to be made on blazor app project. everything is working with a default blazor web assembly project.
+
+## Version History
+
+* 0.2
+    * Fixed navigaiton issues   
+* 0.1
+    * Initial Project
+
 
 ## Description
 
@@ -19,7 +31,6 @@ The goal is be able to select the framework option "Blazor WebAssembly" during t
 ![blazor webpart](https://raw.githubusercontent.com/omarceloribeiro/spfxblazorwebpart/main/blazorwebpart.png)
 
 ![blazor webpart2](https://raw.githubusercontent.com/omarceloribeiro/spfxblazorwebpart/main/webpart-addedonpage2.PNG)
-
 
 
 ex:
@@ -63,8 +74,6 @@ Add new Web part to solution spfxplay-01.
   
 ### Installing
 
-
-
 * Blazor app
 ```
 Upload the published blazorapp folder to a SharePoint Library
@@ -106,12 +115,6 @@ code .
 dotnet watch run --project BlazorApp1
 ```
 
-## Know Issues
-
-* webppart must be added to a page different from homee and the url has to finish with / in order to work the routes in blazor app. ex: /SitePages/app.aspx/
-* blazor app is not loaded when the page is in edit mode
-* blazor app has to be deployed to siteassets library
-
 ## Help
 
 * error: Failed to find a valid digest in the 'integrity' attribute for resource
@@ -123,18 +126,25 @@ https://stackoverflow.com/questions/69926878/failed-to-find-a-valid-digest-in-th
 
 solution: review the baseAppUrl
 
+# Implementation History
+
+Sharepoint has a framework (SPFX) to build modern web parts using pure javascript or any javascript framework (default is react)
+so I published a blazor projeto to a folder in a sharepoint library,
+then I Loaded the blazor javascripts to page head during the webpart render, and then initialized blazor.
+for the resources to work, I had to set the property bootLoadResrouces, is a parameter on blazor start method, specifying the url where the blazorapp bundle scripts are located. so everthing got to work.
+had some compability issues with blazor route and sharepoint navigation, because sharepoint default behavior is to intercept all link events in order to load the content content via ajax, without podtback, so I managed to disable that behavior to all blazor app links. then everything worked as expected.
+the only issue is that the url must ends with slash /, othewise the blazor navigation goes to sharepoint root and the site is not found. so just need to add a / at the end of url.
+the final result was pretty cool, great to see blazor working in sharepoint. will be much easier to develop spfx webparts using blazor instead of react. blazor is much simple, while react has ton of libraries and componentes states and rules.
+would be a good option to build webparts like employee bithdays, company next events, current wheater, current pending approvals, company city holidays, etc!
+
+
 ## Authors
 
-Marcelo Ribeiro - 
-[https://twitter.com/MarceloE2K](https://twitter.com/MarceloE2K)
+* Marcelo Ribeiro
+     * [LinkedIn](https://www.linkedin.com/in/marcelo-henrique-fernandes-ribeiro-a8654a2b)
+     * [Facebook](https://www.facebook.com/marcelohenrique.ribeiro.9?mibextid=D4KYlr)
 
-## Version History
-
-* 0.2
-    * Fixed navigaiton issues   
-* 0.1
-    * Initial Project
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/omarceloribeiro/spfxblazorwebpart/blob/main/LICENSE) file for details
