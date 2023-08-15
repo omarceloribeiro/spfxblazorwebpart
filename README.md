@@ -18,6 +18,8 @@ At the moment, no changes was required to be made on blazor app project. everyth
 
 ## Version History
 
+* 0.3
+   * Added webpart property blazorAppUrl to inform the url of blazor app folder 
 * 0.2
     * Fixed navigaiton issues   
 * 0.1
