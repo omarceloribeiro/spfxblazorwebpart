@@ -10,8 +10,13 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import styles from './HelloWorldWebPart.module.scss';
 import * as strings from 'HelloWorldWebPartStrings';
 
+
+
+
+
 export interface IHelloWorldWebPartProps {
   description: string;
+  blazorAppUrl: string;
 }
 
 export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorldWebPartProps> {
@@ -19,11 +24,12 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
 
-  private baseAppUrl = "https://3nc1np.sharepoint.com/sites/TesteMR1/SiteAssets/blazorapp1/";
+  //private baseAppUrl = this.properties.blazorAppUrl;
   private blazorLoadCount = 0;
   private blazorStarted = false;
   private blazorLoaded = false;
   private appDivElementId = "app";
+  private fieldBlazorAppUrl = "";
 
   protected override get isRenderAsync(): boolean {
     return true;
@@ -31,13 +37,14 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
 
   public render(): void {
 
+    this.ensureBlazorAppUrl();
     console.log("render started");
     console.log("blazorLoaded = " + this.blazorLoaded);
     console.log("blazorStarted = " + this.blazorStarted); 
 
     if (this.blazorLoaded && this.blazorStarted){
-      var myWindow: any = window;
-      myWindow._spWebPartDataLoaded = true;
+      //var myWindow: any = window;
+      //myWindow._spWebPartDataLoaded = true;
       // TODO: refresh blazor app div
       console.log("TODO: refresh blazor app div");
     }
@@ -78,13 +85,18 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     </section>`;
     console.log("render - html setted to domElement innerHTML");
 
-    if (!this.blazorStarted){
-      this.startBlazor(this).then(() => { 
-        this.FixHyperlinksSPDataInterception();
-        this.FixHyperlinksHome();
-        console.log("render completed.");
-        this.renderCompleted(); 
-      });
+    if (this.fieldBlazorAppUrl){
+      if (!this.blazorStarted){
+        this.startBlazor().then(() => { 
+          this.FixHyperlinksSPDataInterception();
+          this.FixHyperlinksHome();
+          console.log("render completed.");
+          this.renderCompleted(); 
+        });
+      }
+      else{
+        this.renderCompleted();
+      }
     }
     else{
       this.renderCompleted();
@@ -93,20 +105,38 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
 
   protected onInit(): Promise<void> {
     console.log("onInit");
-    var baseHead = document.createElement('base');
-    baseHead.setAttribute("href", window.location.pathname);
-    //document.head.appendChild(baseHead);
-    //window.location.hash("/CoolApp/");
-    //history.pushState(null, "", window.location.href + '/');
+    this.ensureBlazorAppUrl();
+    // require("./assets/blazorapp1/icon-512.png");
+    // require("./assets/blazorapp1/_framework/blazor.");
 
-   return this.loadBlazorBundle()
-                .then(() =>{
-                  this.blazorLoaded = true;
-                }).then(() => {
-                  this._getEnvironmentMessage().then(message => {
-                  this._environmentMessage = message;
-                  });
-                });
+
+    // var normalizedPath = require("path").join("./assets/", "blazorapp1");
+
+    // require("fs").readdirSync(normalizedPath).forEach(function(file: any) {
+    //   require("./assets/blazorapp1/" + file);
+    // });
+
+
+      if (this.fieldBlazorAppUrl){
+      var baseHead = document.createElement('base');
+      baseHead.setAttribute("href", window.location.pathname);
+      //document.head.appendChild(baseHead);
+      //window.location.hash("/CoolApp/");
+      //history.pushState(null, "", window.location.href + '/');
+
+      return this.loadBlazorBundle()
+                    .then(() =>{
+                      this.blazorLoaded = true;
+                    }).then(() => {
+                      this._getEnvironmentMessage().then(message => {
+                      this._environmentMessage = message;
+                      });
+                    });
+      }
+      else
+      {
+        return new Promise((resolve, reject)=> { resolve(); });
+      }
   }
 
   protected onDisplayModeChanged(oldDisplayMode: DisplayMode): void {
@@ -185,6 +215,9 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel
+                }),
+                PropertyPaneTextField('blazorAppUrl', {
+                  label: strings.BaseAppUrlFieldLabel
                 })
               ]
             }
@@ -196,6 +229,18 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
 
   protected renderCompleted(error?: Error | undefined, didUpdate?: boolean | undefined): void {
     console.log("on renderCompleted");
+  }
+
+  protected ensureBlazorAppUrl(){
+    if (this.properties.blazorAppUrl)
+      this.fieldBlazorAppUrl = this.properties.blazorAppUrl;
+    else {
+      // TODO: get url of sharepoint appcatalogcdn
+      let urlCDN = "https://3nc1np.sharepoint.com/sites/appcatalog/ClientSideAssets";
+      let webPartId = "f431737f-d74e-421a-a3fe-2174e48ca884";
+      let blazorFolder = "blazorapp1";
+      this.fieldBlazorAppUrl = urlCDN + "/" + webPartId + "/" + blazorFolder + "/";
+    }
   }
 
   protected loadBlazorBundle(): Promise<void>{
@@ -216,14 +261,16 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   }
 
   protected async loadBlazorCSS(): Promise<void>{
-    await this.loadCSS(this.baseAppUrl + "css/bootstrap/bootstrap.min.css");
-    await this.loadCSS(this.baseAppUrl + "css/app.css");
-    await this.loadCSS(this.baseAppUrl + "BlazorApp1.styles.css");
+    debugger;
+    console.log("loadBlazorCSS - " + this.fieldBlazorAppUrl);
+    await this.loadCSS(this.fieldBlazorAppUrl + "css/bootstrap/bootstrap.min.css");
+    await this.loadCSS(this.fieldBlazorAppUrl + "css/app.css");
+    await this.loadCSS(this.fieldBlazorAppUrl + "BlazorApp1.styles.css");
   }
 
   protected async loadBlazorJS(): Promise<void>{
-    await this.loadJS(this.baseAppUrl + "_framework/blazor.webassembly.js", 'true', true);
-    await this.loadJS(this.baseAppUrl + "myscript.js");
+    await this.loadJS(this.fieldBlazorAppUrl + "_framework/blazor.webassembly.js", 'true', true);
+    await this.loadJS(this.fieldBlazorAppUrl + "myscript.js");
   }
 
   protected loadJS(FILE_URL : string, async : string = 'true', addAutoStartFalse : boolean = false): Promise<void> {
@@ -308,12 +355,12 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     }
   }
 
-  protected startBlazor(context: any) : Promise<void>{
+  protected startBlazor() : Promise<void>{
     console.log("blazor is start started.");
     let windowObj:any = window;
     return windowObj.Blazor.start({
-      loadBootResource: function (type: any, name: any, defaultUri: any, integrity: any) {
-        var newResourceUrl = context.baseAppUrl +`_framework/${name}`;
+      loadBootResource: (type: any, name: any, defaultUri: any, integrity: any) => {
+        var newResourceUrl = this.fieldBlazorAppUrl +`_framework/${name}`;
         console.log(`Loading: '${type}', '${name}', '${newResourceUrl}', '${integrity}'`);
           return  newResourceUrl;
           // switch (type) {
@@ -332,6 +379,28 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   protected getAppDivElement(){
     let appDivElement = document.getElementById(this.appDivElementId);
     return appDivElement;
+  }
+
+  protected onAfterPropertyPaneChangesApplied(): void {
+    console.log("onAfterPropertyPaneChangesApplied - properties saved " + this.fieldBlazorAppUrl);
+    console.log("onAfterPropertyPaneChangesApplied - properties saved " + this.properties.description);
+    this.ensureBlazorAppUrl();
+    if (this.fieldBlazorAppUrl && !this.blazorLoaded && !this.blazorStarted){
+      this.loadBlazorBundle().then(() => this.startBlazor());
+    }
+  }
+  
+  protected onPropertyPaneConfigurationComplete(): void {
+    console.log("onPropertyPaneConfigurationComplete - properties saved " + this.fieldBlazorAppUrl);
+    console.log("onPropertyPaneConfigurationComplete - properties saved " + this.properties.description);
+    this.ensureBlazorAppUrl();
+    if (this.fieldBlazorAppUrl && !this.blazorLoaded && !this.blazorStarted){
+      this.loadBlazorBundle().then(() => this.startBlazor());
+    }
+  }
+
+  protected get disableReactivePropertyChanges(): boolean {
+    return true;
   }
   
 }
