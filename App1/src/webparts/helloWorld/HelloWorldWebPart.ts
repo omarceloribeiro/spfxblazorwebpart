@@ -102,21 +102,11 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
       this.renderCompleted();
     }
   }
-
+  
   protected onInit(): Promise<void> {
     console.log("onInit");
     this.ensureBlazorAppUrl();
-    // require("./assets/blazorapp1/icon-512.png");
-    // require("./assets/blazorapp1/_framework/blazor.");
-
-
-    // var normalizedPath = require("path").join("./assets/", "blazorapp1");
-
-    // require("fs").readdirSync(normalizedPath).forEach(function(file: any) {
-    //   require("./assets/blazorapp1/" + file);
-    // });
-
-
+   
       if (this.fieldBlazorAppUrl){
       var baseHead = document.createElement('base');
       baseHead.setAttribute("href", window.location.pathname);
@@ -360,7 +350,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     let windowObj:any = window;
     return windowObj.Blazor.start({
       loadBootResource: (type: any, name: any, defaultUri: any, integrity: any) => {
-        var newResourceUrl = this.fieldBlazorAppUrl +`_framework/${name}`;
+        let newResourceUrl = this.fieldBlazorAppUrl +`_framework/${name}`;
         console.log(`Loading: '${type}', '${name}', '${newResourceUrl}', '${integrity}'`);
           return  newResourceUrl;
           // switch (type) {
@@ -386,7 +376,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     console.log("onAfterPropertyPaneChangesApplied - properties saved " + this.properties.description);
     this.ensureBlazorAppUrl();
     if (this.fieldBlazorAppUrl && !this.blazorLoaded && !this.blazorStarted){
-      this.loadBlazorBundle().then(() => this.startBlazor());
+      this.loadBlazorBundle().then(() => this.startBlazor()).then(() => console.log("done."));
     }
   }
   
