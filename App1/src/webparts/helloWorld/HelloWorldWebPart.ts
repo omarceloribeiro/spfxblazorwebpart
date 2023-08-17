@@ -106,6 +106,12 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   protected onInit(): Promise<void> {
     console.log("onInit");
     this.ensureBlazorAppUrl();
+
+    
+    //require("./assets/blazorapp1/icon-512.png");
+    //require("./assets/blazorapp1/_framework/BlazorApp1.dll");
+    require("./assets/blazorapp1/_framework/my3.png");
+    //require("./assets/blazorapp1/_framework/blazor.boot.json");
    
       if (this.fieldBlazorAppUrl){
       var baseHead = document.createElement('base');

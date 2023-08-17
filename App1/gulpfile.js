@@ -28,26 +28,25 @@ build.rig.addPreBuildTask(blazorCopy);
 
 // Copy files to dist folder
 // // add file-loader options
-// build.configureWebpack.mergeConfig({
-//   additionalConfiguration: (generatedConfiguration) => {
-//     generatedConfiguration.module.rules.push(
-//       {
-//         test: /(blazorapp1).*\.*$/,
-//         type: 'javascript/auto',
-//         use: [
-//           {
-//             loader: 'file-loader',
-//             options: {
-//               name: '[path][name].[ext]',
-//             }
-//           }
-//         ]
-//       }
-//     );
+build.configureWebpack.mergeConfig({
+  additionalConfiguration: (generatedConfiguration) => {
+    generatedConfiguration.module.rules.push(
+      {
+        test: /(blazorapp1).*\.png*$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+            }
+          }
+        ]
+      }
+    );
 
-//     return generatedConfiguration;
-//   }
-// });
+    return generatedConfiguration;
+  }
+});
 
 
 // // add copy plugin
