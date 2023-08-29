@@ -16,16 +16,6 @@ Demo blazor webppart navigation video
 
 At the moment, no changes was required to be made on blazor app project. everything is working with a default blazor web assembly project.
 
-## Version History
-
-* 0.3
-   * Added webpart property blazorAppUrl to inform the url of blazor app folder 
-* 0.2
-    * Fixed navigaiton issues   
-* 0.1
-    * Initial Project
-
-
 ## Description
 
 The goal is be able to select the framework option "Blazor WebAssembly" during the process of creating a spfx webapart.
@@ -63,6 +53,15 @@ Add new Web part to solution spfxplay-01.
 Would be great build spfx webpart using blazor as the framework. on webpart creation just select blazor and all the folder/project is generated. Would be a great improvement on spfx development for the community developers.
 would be a good option to build webparts like employee bithdays, company next events, current wheater, current pending approvals, company city holidays, etc!
 
+## Version History
+
+* 0.3
+   * Added webpart property blazorAppUrl to inform the url of blazor app folder 
+* 0.2
+    * Fixed navigaiton issues   
+* 0.1
+    * Initial Project
+ 
 ## Next steps
 
 * Access sharepoint list from blazor app using current credentials
