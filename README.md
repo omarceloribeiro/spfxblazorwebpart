@@ -1,20 +1,24 @@
-# SPFX Blazor WeebPart
+# SPFX Blazor WebPart
 
 Project initative to create a spfx webpart that uses blazor as framework.
 
-Please see the Issues tab and the Milestones to see what is missing to get a working version of a blazor webpart.
-
-Also please see the [Contributing guidelines](https://github.com/omarceloribeiro/spfxblazorwebpart/blob/main/CONTRIBUTING.md).
-
-Initiative also submitted on SharePoint sp-dev-docs github:
-https://github.com/SharePoint/sp-dev-docs/issues/9137
-still on triage.
-
-Demo blazor webppart navigation video
+**Demo video**
 
 [See Demo Video](https://github.com/omarceloribeiro/spfxblazorwebpart/blob/main/DemoVideo.md)
 
+**Issue on SharePoint sp-dev-docs github**
+
+https://github.com/SharePoint/sp-dev-docs/issues/9137
+
+**User Voice ticket**
+
+https://techcommunity.microsoft.com/t5/sharepoint-developer/please-add-support-to-blazor-in-spfx-webpart/m-p/3918870
+
 At the moment, no changes was required to be made on blazor app project. everything is working with a default blazor web assembly project.
+
+Please see the Issues tab and the Milestones to see what is missing to get a working version of a blazor webpart.
+
+[Contributing guidelines](https://github.com/omarceloribeiro/spfxblazorwebpart/blob/main/CONTRIBUTING.md).
 
 ## Description
 
