@@ -14,8 +14,6 @@ https://github.com/SharePoint/sp-dev-docs/issues/9137
 
 https://techcommunity.microsoft.com/t5/sharepoint-developer/please-add-support-to-blazor-in-spfx-webpart/m-p/3918870
 
-At the moment, no changes was required to be made on blazor app project. everything is working with a default blazor web assembly project.
-
 Please see the Issues tab and the Milestones to see what is missing to get a working version of a blazor webpart.
 
 [Contributing guidelines](https://github.com/omarceloribeiro/spfxblazorwebpart/blob/main/CONTRIBUTING.md).
@@ -56,6 +54,20 @@ Add new Web part to solution spfxplay-01.
 
 Would be great build spfx webpart using blazor as the framework. on webpart creation just select blazor and all the folder/project is generated. Would be a great improvement on spfx development for the community developers.
 would be a good option to build webparts like employee bithdays, company next events, current wheater, current pending approvals, company city holidays, etc!
+
+## Status
+
+* At the moment, no changes was required to be made on blazor app project. everything is working with a default blazor web assembly project.
+* Blazor app files should be deployed to a document library folder.
+* Navigation is working, but at first access is required to put a / at the end of SharePoint Url
+
+Deploy to SharePoint AppCatalog is not supported https://github.com/SharePoint/sp-dev-docs/issues/9150:
+
+The folder "ClientSideAssets" in the SPPKG is not the actual representation of the folder that is uploaded to the App Catalog. Instead, the ClientSideAssets.xml.rels points to a list of files within the SPPKG and these files always get uploaded as a flat list to ClientSideAssets/ in the App Catalog. The ClientSideAssets/ folder that's inside the package is just for organization/debugging.
+
+Given the first issue, there's not a way to actually upload anything into a subfolder in ClientSideAssets/. So, my recommendation here (for now) would be to instead, separately deploy the Blazor app to a CDN and then reference the CDN from your web part code when loading the Blazor app. You would probably want to also add versioning on the CDN (i.e. https://somecdn.com/v1.1.0/blazorapp1/...).
+
+The team has been exploring Blazor, but we don't have an officially recommended support path for it yet. Since this is a feature you are interested in SPFx having support for, I'd also recommend filing a UserVoice ticket.
 
 ## Version History
 
